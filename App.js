@@ -8,6 +8,7 @@
 
 import React, {Component} from 'react';
 import {
+  StyleSheet,
   Text, 
   View, 
   Image, 
@@ -26,19 +27,44 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <FlatList 
-        style={{marginTop: 20}}
+      <FlatList style={styles.container}
         data={fotos}
         keyExtractor={item => item.id.toString()}
         renderItem={ ({item}) =>
           <View>
-            <Text>{item.usuario}</Text>
+            <View style={styles.cabecalho}>
+              <Image 
+                source={require('./resources/img/alura.jpg')}
+                style={styles.fotoDePerfil}/>
+              <Text>{item.usuario}</Text>
+            </View>
             <Image 
               source={require('./resources/img/alura.jpg')} 
-              style={{width:width, height:width}} />
+              style={styles.foto} />
           </View>
         }
         />
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 20
+  },
+  cabecalho: {
+    margin: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  fotoDePerfil: {
+    marginRight: 10,
+    borderRadius: 20,
+    width: 40,
+    height: 40
+  },
+  foto: {
+    width: width,
+    height: width
+  }
+});
