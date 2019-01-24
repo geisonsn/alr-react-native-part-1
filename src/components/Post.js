@@ -15,7 +15,7 @@ export default class Post extends Component {
             <View>
                 <View style={styles.cabecalho}>
                     <Image 
-                        source={require('../../resources/img/alura.jpg')}
+                        source={{uri: this.props.foto.urlPerfil}}
                         style={styles.fotoDePerfil}
                         />
                     <Text>{this.props.foto.loginUsuario}</Text>
