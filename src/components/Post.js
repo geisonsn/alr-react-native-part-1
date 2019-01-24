@@ -13,15 +13,15 @@ export default class Post extends Component {
     render() {
         return (
             <View>
-                <View>
+                <View style={styles.cabecalho}>
                     <Image 
                         source={require('../../resources/img/alura.jpg')}
                         style={styles.fotoDePerfil}
                         />
-                    <Text>{this.props.foto.usuario}</Text>
+                    <Text>{this.props.foto.loginUsuario}</Text>
                 </View>
                 <Image 
-                    source={require('../../resources/img/alura.jpg')}
+                    source={{uri: this.props.foto.urlFoto}}
                     style={styles.foto}
                     />
             </View>
