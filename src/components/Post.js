@@ -5,7 +5,8 @@ import {
     Image,
     StyleSheet,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    TextInput
 } from 'react-native';
 
 const width = Dimensions.get('screen').width;
@@ -15,7 +16,8 @@ export default class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            foto: this.props.foto
+            foto: this.props.foto,
+            valorComentario: ''
         };
     }
 
@@ -44,6 +46,24 @@ export default class Post extends Component {
             likers: novaLista
         };
         this.setState({foto: fotoAtualizada});
+    }
+
+    adicionaComentario() {
+        if (this.state.valorComentario === '') return;
+        
+        const novaLista = [...this.state.foto.comentarios, {
+            id: this.state.valorComentario,
+            login: 'meuUsuario',
+            texto: this.state.valorComentario
+        }];
+
+        const fotoAtualizada = {
+            ...this.state.foto,
+            comentarios: novaLista
+        }
+
+        this.setState({foto: fotoAtualizada, valorComentario: ''});
+        this.inputComentario.clear();
     }
 
     exibeLikes(likers) {
@@ -105,6 +125,19 @@ export default class Post extends Component {
                             </View>
                         )
                     }
+
+                    <View style={styles.novoComentario}>
+                        <TextInput style={styles.input}
+                            placeholder='Adicione um comentário...'
+                            underlineColorAndroid='transparent'
+                            ref={input => this.inputComentario = input}
+                            onChangeText={texto => this.setState({valorComentario: texto})}/>
+
+                        <TouchableOpacity onPress={this.adicionaComentario.bind(this)}>
+                            <Image style={styles.icone}
+                                source={require('../../resources/img/send.png')}/>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
 
@@ -146,5 +179,19 @@ const styles = StyleSheet.create({
     tituloComentario: {
         fontWeight: 'bold',
         marginRight: 5
-    }
+    },
+    novoComentario: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd'
+    },
+    input: {
+        flex: 100,
+        height: 40
+    },
+    icone: {
+        height: 30,
+        width: 30
+    }     
 });
